@@ -9,9 +9,8 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='pyglance',
-    version='0.1.0',
+    version='0.1.3',
     packages=['pyglance'],
-    install_requires=required,
     include_package_data=True,
     license='MIT License',
     description='A Glance client and library for terminal speed reading.',
@@ -21,7 +20,7 @@ setup(
     author_email='rich@openwatch.net',
     entry_points={
         'console_scripts': [
-            'glance= pyglance.glance:main',
+            'glance= pyglance.__init__:runner',
         ]
     },
     classifiers=[

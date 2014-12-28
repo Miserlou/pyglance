@@ -87,6 +87,12 @@ def command_line_runner():
 
     glance(all_content, smargs['speed'])
 
+def runner():
+    try:
+        command_line_runner()
+    except Exception, e:
+        quit()
+
 if __name__ == '__main__':
     try:
         command_line_runner()
