@@ -8,8 +8,6 @@ import argparse
 import sys
 import time
 
-test_text = 'Workers on banana plantations in Central America have been exposed to pesticides which have been found to cause various health conditions including sterility. Banana industry advocates maintain that exposure levels were too low to produce health issues, but juries in the United States found Dole Food Company guilty of specific cases of worker sterility related to pesticide exposure in the late 1970s. One successful lawsuit presented evidence that Dole continued to use the pesticide DBCP on banana plantations in Nicaragua after the agent was found by the manufacturer to cause health problems and was banned in California in 1977. The jury found the chemical manufacturer, Dow Chemical, 20% liable and Dole 80% liable because Dow had warned Dole of the dangers of aerial spraying in the presence of workers, yet evidence presented in court indicated Dole continued using the agent in close proximity to workers on its Nicaraguan banana plantations. Financial liability in the case was later stricken because of international jurisdiction issues, however the finding of culpability by the jury was left intact.[20][21]'
-
 def choose_pivot(word):
 
     word_length = len(word)
@@ -67,7 +65,7 @@ def glance(text, wpm=800):
     print('')
 
 def get_parser():
-    parser = argparse.ArgumentParser(description='instant coding answers via the command line')
+    parser = argparse.ArgumentParser(description='Glance speed reading for the command line')
     parser.add_argument('file', metavar='FILE', type=str, nargs='*',
                         help='Path to file to glance.')
     parser.add_argument('-s','--speed', help='Speed in Words Per Minute. Default 600.', default=600, type=int)

@@ -10,14 +10,16 @@ It's not the best because it doesn't have top/bottom registration marks yet. Imp
 
 ## Usage (CLI)
 
-    glance filename.txt
+    $ glance filename.txt
+    $ glance file1.txt file2.txt --speed 500
 
 ## Usage (Programmatic)
 
     from pyglance import glance
     
     glance(your_text_string)
-    glance(your_text_string, wpm=800)
+    wpm = 800
+    glance(your_text_string, wpm)
 
 ## About
 
