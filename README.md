@@ -24,3 +24,5 @@ It's not the best because it doesn't have top/bottom registration marks yet. Imp
 There were some other attempts to do this, but none that quite accurately matched the 'Glance' timing and spacing specification.
 
 This is used by the [seek](http://github.com/Miserlou/seek) project.
+
+3 Clause BSD, Rich Jones 2014.
