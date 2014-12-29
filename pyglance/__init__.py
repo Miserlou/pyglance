@@ -36,6 +36,12 @@ def output(word, pivot):
     print(out, end='')
 
 def glance(text, wpm=800):
+    
+    # Remove special chars
+    text = text.replace('\n', '')
+    text = text.replace('\r', '')
+    text = text.replace('\t', '')
+
     words = text.split(' ')
     default_sleep_interval = get_sleep_interval(wpm)
     
@@ -82,7 +88,7 @@ def command_line_runner():
     all_content = ''
     for filepath in smargs['file']:
         with open(filepath) as f:
-            content = f.readlines()[0].strip()
+            content = f.read().strip()
         all_content = all_content + content
 
     glance(all_content, smargs['speed'])
@@ -97,4 +103,5 @@ if __name__ == '__main__':
     try:
         command_line_runner()
     except Exception, e:
+        print(e)
         quit()
