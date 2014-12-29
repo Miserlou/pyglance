@@ -13,7 +13,7 @@ It's not the best because it doesn't have top/bottom registration marks yet. Imp
 
 ## Installation
 
-    pip install pyglance -g
+    pip install pyglance
 
 ## Usage (CLI)
 
