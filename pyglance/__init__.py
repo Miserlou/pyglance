@@ -96,12 +96,18 @@ def command_line_runner():
 def runner():
     try:
         command_line_runner()
+    except (KeyboardInterrupt, SystemExit):
+        print()
+        quit()
     except Exception, e:
         quit()
 
 if __name__ == '__main__':
     try:
         command_line_runner()
+    except (KeyboardInterrupt, SystemExit):
+        print()
+        quit()
     except Exception, e:
         print(e)
         quit()
