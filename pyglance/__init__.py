@@ -8,6 +8,7 @@ import argparse
 import sys
 import time
 
+
 def choose_pivot(word):
 
     word_length = len(word)
@@ -27,16 +28,18 @@ def get_sleep_interval(wpm):
         time_per_word = 60.0 / wpm
         return time_per_word 
 
-def output(word, pivot):
+def output(word, pivot, width=0):
     start = '\r' + ' '*((4-pivot)) + word[0:pivot-1]
     mid = '\033[31m' + word[pivot-1:pivot] + "\033[0m"
     end = word[pivot:] + ' '*(10-(len(word)-pivot))
     
     out = start + mid + end
-    print(out, end='')
+    print(out + (width-len(out))*' ', end='')
 
 def glance(text, wpm=800):
-    
+   
+    (width, height) = get_terminal_size()
+ 
     # Remove special chars
     text = text.replace('\n', '')
     text = text.replace('\r', '')
@@ -60,15 +63,47 @@ def glance(text, wpm=800):
 
         sys.stdout.flush()
         pivot = choose_pivot(word)
-        output(word, pivot)
+        output(word, pivot, width)
         time.sleep(sleep_interval)
 
         if space:
             sys.stdout.flush()
-            print('\r                ', end='')
+            #print('\r                ', end='')
+            print('\r' + ' '*width, end='')
             time.sleep(space_sleep_interval)
     
     print('')
+
+# Stolen from: http://stackoverflow.com/questions/566746/how-to-get-console-window-width-in-python
+# Not sure if this is windows compatible. 
+def get_terminal_size():
+    import os
+    env = os.environ
+    def ioctl_GWINSZ(fd):
+        try:
+            import fcntl, termios, struct, os
+            cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ,
+        '1234'))
+        except:
+            return
+        return cr
+    cr = ioctl_GWINSZ(0) or ioctl_GWINSZ(1) or ioctl_GWINSZ(2)
+    if not cr:
+        try:
+            fd = os.open(os.ctermid(), os.O_RDONLY)
+            cr = ioctl_GWINSZ(fd)
+            os.close(fd)
+        except:
+            pass
+    if not cr:
+        cr = (env.get('LINES', 25), env.get('COLUMNS', 80))
+
+        ### Use get(key[, default]) instead of a try/catch
+        #try:
+        #    cr = (env['LINES'], env['COLUMNS'])
+        #except:
+        #    cr = (25, 80)
+    return int(cr[1]), int(cr[0])
 
 def get_parser():
     parser = argparse.ArgumentParser(description='Glance speed reading for the command line')
