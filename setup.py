@@ -3,14 +3,17 @@ from setuptools import setup
 
 # Set external files
 README = open(os.path.join(os.path.dirname(__file__), 'README.md')).read()
+with open(os.path.join(os.path.dirname(__file__), 'requirements.txt')) as f:
+        required = f.read().splitlines()
 
 # allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='pyglance',
-    version='0.2.1',
+    version='0.3.0',
     packages=['pyglance'],
+    install_requires=required,
     include_package_data=True,
     license='MIT License',
     description='A Glance client and library for terminal speed reading.',

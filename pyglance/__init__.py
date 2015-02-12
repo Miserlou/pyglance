@@ -5,9 +5,24 @@
 
 from __future__ import print_function
 import argparse
+import requests 
 import sys
 import time
+import urllib
 
+# Really shouldn't do this.
+DIFFBOT_API_TOKEN = '2efef432c72b5a923408e04353c39a7c'
+
+def get_page_data(url):
+    diffbot_url = 'http://api.diffbot.com/v2/article?url=' + urllib.quote_plus(url) + "&token=" + DIFFBOT_API_TOKEN
+    page = requests.get(diffbot_url)
+    data = page.json()
+
+    if 'error' in data:
+        print(data['error'])
+        quit()
+
+    return data
 
 def choose_pivot(word):
 
@@ -105,6 +120,14 @@ def get_terminal_size():
         #    cr = (25, 80)
     return int(cr[1]), int(cr[0])
 
+def read_file_contents(path):
+    all_content = ''
+    for filepath in path:
+        with open(filepath) as f:
+            content = f.read().strip()
+        all_content = all_content + content
+    return all_content
+
 def get_parser():
     parser = argparse.ArgumentParser(description='Glance speed reading for the command line')
     parser.add_argument('file', metavar='FILE', type=str, nargs='*',
@@ -120,12 +143,15 @@ def command_line_runner():
         parser.print_help()
         return
 
+    inpath = smargs['file']
     all_content = ''
-    for filepath in smargs['file']:
-        with open(filepath) as f:
-            content = f.read().strip()
-        all_content = all_content + content
 
+    if 'http:' in inpath[0] or 'https:' in inpath[0]:
+        all_content = get_page_data(inpath[0]) 
+        all_content = all_content['text']
+    else:
+        all_content = read_file_contents(inpath)
+    
     glance(all_content, smargs['speed'])
 
 def runner():
